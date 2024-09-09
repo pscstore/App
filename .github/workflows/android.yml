@@ -22,6 +22,19 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'  # Match your local Node.js version
+
+    - name: Install Capacitor CLI and dependencies
+      run: |
+        npm install @capacitor/cli @capacitor/core
+        npm install
+
+    - name: Sync Capacitor with Android project
+      run: npx cap sync android
+
     - name: Install Android SDK
       run: |
         sudo apt-get update
