@@ -14,6 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        # Specify to use Node.js 20
+        node-version: '20'
 
     - name: Set up JDK 11
       uses: actions/setup-java@v3
@@ -22,20 +25,22 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Download Android SDK
+    - name: Install Android SDK
       run: |
         sudo apt-get update
         sudo apt-get install -y wget unzip
-        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O sdk-tools.zip
-        unzip sdk-tools.zip -d $HOME/android-sdk
+        wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O sdk-tools.zip
+        mkdir -p $HOME/android-sdk/cmdline-tools
+        unzip -q sdk-tools.zip -d $HOME/android-sdk/cmdline-tools
+        mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
         echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
-        echo "$HOME/android-sdk/cmdline-tools/bin" >> $GITHUB_PATH
-        mkdir -p $HOME/.android && echo '### User Sources for Android SDK Manager' > $HOME/.android/repositories.cfg
+        echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+        mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
         yes | sdkmanager --licenses
         sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
     - name: Grant execute permission for gradlew
-      run: chmod +x ./android/gradlew
+      run: chmod +x android/gradlew
 
     - name: Build with Gradle
       run: ./android/gradlew assembleRelease
