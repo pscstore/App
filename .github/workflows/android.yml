@@ -18,7 +18,7 @@ jobs:
         # ... other checkout options
 
     - name: Build Web Assets
-      run: <your_build_command>  # Replace with your project's build command
+      run: npm run build  # Replace with your project's build command
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3  # Replace with the latest version
