@@ -22,21 +22,26 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Set up Android SDK
-      uses: android-actions/setup-android@v2
-      with:
-        api-level: 34 # Android 14 (Upside Down Cake)
-        target: 'android-34'
-        build-tools: '34.0.0'
+    - name: Download Android SDK
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget unzip
+        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O sdk-tools.zip
+        unzip sdk-tools.zip -d $HOME/android-sdk
+        echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+        echo "$HOME/android-sdk/cmdline-tools/bin" >> $GITHUB_PATH
+        mkdir -p $HOME/.android && echo '### User Sources for Android SDK Manager' > $HOME/.android/repositories.cfg
+        yes | sdkmanager --licenses
+        sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x ./android/gradlew
 
     - name: Build with Gradle
-      run: ./gradlew assembleRelease
+      run: ./android/gradlew assembleRelease
 
     - name: Upload APK
       uses: actions/upload-artifact@v3
       with:
         name: app-release
-        path: app/build/outputs/apk/release/*.apk
+        path: android/app/build/outputs/apk/release/*.apk
