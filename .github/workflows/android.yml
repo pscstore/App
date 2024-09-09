@@ -15,10 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up JDK 11
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
         cache: gradle
 
@@ -40,7 +40,7 @@ jobs:
       run: chmod +x android/gradlew
 
     - name: Build with Gradle
-      working-directory: android  # Change to your Android project directory
+      working-directory: android  # Ensure this is the correct path to your Android project
       run: ./gradlew assembleRelease
 
     - name: Upload APK
