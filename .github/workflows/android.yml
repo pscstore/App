@@ -27,12 +27,16 @@ jobs:
       with:
         node-version: '20'  # Match your local Node.js version
 
+    # Add your project's build command here (if needed)
+    # - run: <your_build_command>  # Replace with the actual command
+
     - name: Install Capacitor CLI and dependencies
       run: |
         npm install @capacitor/cli @capacitor/core
         npm install
 
     - name: Sync Capacitor with Android project
+      # Check capacitor.config.json for webDir or adjust the path here (if needed)
       run: npx cap sync
 
     - name: Install Android SDK
