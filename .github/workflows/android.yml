@@ -33,7 +33,7 @@ jobs:
         npm install
 
     - name: Sync Capacitor with Android project
-      run: npx cap sync android
+      run: npx cap sync
 
     - name: Install Android SDK
       run: |
