@@ -40,7 +40,8 @@ jobs:
       run: chmod +x android/gradlew
 
     - name: Build with Gradle
-      run: ./android/gradlew assembleRelease
+      working-directory: android  # Change to your Android project directory
+      run: ./gradlew assembleRelease
 
     - name: Upload APK
       uses: actions/upload-artifact@v3
