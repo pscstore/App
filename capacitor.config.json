@@ -1,0 +1,10 @@
+{
+  "appId": "com.freesoftware.new",
+  "appName": "guide",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

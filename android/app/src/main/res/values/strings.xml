@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">guide</string>
+    <string name="title_activity_main">guide</string>
+    <string name="package_name">com.freesoftware.new</string>
+    <string name="custom_url_scheme">com.freesoftware.new</string>
+</resources>
